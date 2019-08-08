@@ -1,0 +1,68 @@
+{
+  "Version": "18.04",
+  "OEM": {
+    "Vendor": "Dell Inc.",
+    "Product": "Inspiron 5567"
+  },
+  "BIOS": {
+    "Vendor": "Dell Inc.",
+    "Version": "1.2.4"
+  },
+  "CPU": [
+    {
+      "Vendor": "GenuineIntel",
+      "Family": "6",
+      "Model": "142",
+      "Stepping": "9"
+    }
+  ],
+  "Arch": "amd64",
+  "GPU": [
+    {
+      "Vendor": "8086",
+      "Model": "5916"
+    }
+  ],
+  "RAM": 16.3,
+  "Partitions": [
+    386,
+    0.1,
+    30.7
+  ],
+  "Screens": [
+    {
+      "Resolution": "1920x1080",
+      "Frequency": "60.01"
+    }
+  ],
+  "Autologin": false,
+  "LivePatch": false,
+  "Session": {
+    "DE": "ubuntu:GNOME",
+    "Name": "ubuntu",
+    "Type": "x11"
+  },
+  "Timezone": "Asia/Kolkata",
+  "Install": {
+    "Media": "Ubuntu 18.04 LTS \"Bionic Beaver\" - Release amd64 (20180426)",
+    "Type": "GTK",
+    "PartitionMethod": "resize_use_free",
+    "DownloadUpdates": true,
+    "Language": "en",
+    "Minimal": false,
+    "RestrictedAddons": false,
+    "Stages": {
+      "0": "language",
+      "9": "console_setup",
+      "-19776": "prepare",
+      "-19684": "partman",
+      "-19676": "partman",
+      "-19643": "start_install",
+      "-19603": "partman",
+      "-19391": "timezone",
+      "-19324": "usersetup",
+      "-19258": "user_done",
+      "-18415": "done"
+    }
+  }
+}

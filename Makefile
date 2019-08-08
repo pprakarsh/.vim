@@ -1,19 +1,35 @@
-SHELL	:= /usr/bin/env bash
-FILES	:= $(shell git ls-files autoload bin doc plugin)
+BUILD_VIRTUAL_ENV:=build/venv
 
-all: clang_complete.vmb
+test:
+	pytest
 
-clang_complete.vmb: $(FILES)
-	vim -c "r! git ls-files autoload bin doc plugin" \
-	     -c '$$,$$d _' \
-	     -c "%MkVimball! $@ ." -c 'q!'
+test_nvim:
+	VSPEC_VIM=nvim pytest
 
-.PHONY: install uninstall
-install: clang_complete.vmb
-	vim $< -c 'so %' -c 'q'
-uninstall:
-	vim -c 'RmVimball clang_complete.vmb' -c 'q'
+test_coverage: export PYTEST_ADDOPTS:=--cov pythonx --cov test --cov-report=term-missing:skip-covered
+test_coverage: test_nvim
 
-.PHONY: clean
+$(dir $(BUILD_VIRTUAL_ENV)):
+	mkdir -p $@
+
+$(BUILD_VIRTUAL_ENV): | $(dir $(BUILD_VIRTUAL_ENV))
+	python -m venv $@
+
+$(BUILD_VIRTUAL_ENV)/bin/vint: | $(BUILD_VIRTUAL_ENV)
+	$|/bin/python -m pip install vim-vint==0.3.19
+
+$(BUILD_VIRTUAL_ENV)/bin/flake8: | $(BUILD_VIRTUAL_ENV)
+	$|/bin/python -m pip install -q flake8==3.5.0
+
+vint: $(BUILD_VIRTUAL_ENV)/bin/vint
+	$(BUILD_VIRTUAL_ENV)/bin/vint after autoload ftplugin plugin
+
+flake8: $(BUILD_VIRTUAL_ENV)/bin/flake8
+	$(BUILD_VIRTUAL_ENV)/bin/flake8 pythonx/jedi_*.py
+
+check: vint flake8
+
 clean:
-	rm -f clang_complete.vmb
+	rm -rf build
+
+.PHONY: test check clean vint flake8
