@@ -7,6 +7,12 @@ Plug 'https://github.com/xavierd/clang_complete.git'
 "Plugin for python jedi
 Plug 'davidhalter/jedi-vim'
 
+"Plugin for speed-code HTML, CSS, JavaScript
+Plug 'mattn/emmet-vim'
+
+"Plugin for nerd-tree (file tree view)
+Plug 'https://github.com/scrooloose/nerdtree.git'
+
 call plug#end()
 
 "do not act as vi (predecessor of vim)
@@ -54,6 +60,10 @@ filetype on
 autocmd BufNewFile *.cpp :0r ~/.vim/cpp
 autocmd BufNewFile *.cpp :w!
 
+"loading nerdtree automatically
+autocmd vimenter * NERDTree
+
+
 "MAPPINGS
 
 "turn off search highlighting
@@ -63,6 +73,7 @@ nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <F5> :grep <C-R><C-W> *<CR>
 
 inoremap " ""<Esc>i
+inoremap ' ''<Esc>i
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
 inoremap { {}<Esc>i
@@ -71,8 +82,15 @@ inoremap { {}<Esc>i
 let g:BASH_Ctrl_j = 'off'
 imap <C-j> <Esc><Right>a
 
+"nerdtreeToggle
+map <C-n> :NERDTreeToggle<CR>
+
 "remapping tabnew commands
 ca tn tabnew
+
+"closing NerdTree when only this is the default open
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
 
 " path to directory where library can be found
 " let g:clang_library_path='/usr/lib/llvm-6.0/lib'
@@ -87,3 +105,6 @@ ca tn tabnew
  let g:clang_hl_errors=1                            "highlights errors
  let g:clang_jumpto_declaration_in_preview_key=1    "jumps to declaration in preview
  let g:clang_complete_patterns=1                    "completes loops and other code patterns
+
+ set autowrite
+nnoremap <C-c> :!g++ -std=c++11 % -Wall -g -o %.out && ./%.out<CR>
