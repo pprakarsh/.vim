@@ -36,7 +36,7 @@ inoremap " ""<Esc>i
 inoremap ' ''<Esc>i
 inoremap ( ()<Esc>i
 inoremap [ []<Esc>i
-inoremap { {}<Esc>i<CR><CR><Up>
+"inoremap { {}<Esc>i<CR><CR><Up>
 
 " redef C-j to C-g
 imap <C-g> <Plug>IMAP_JumpForward
